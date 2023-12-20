@@ -23,11 +23,11 @@ public class Criticals extends Module {
         Entity victim = e.getEntity();
         Entity attacker = e.getDamager();
 
-        if (attacker instanceof Player player && attacker.isOnGround()) {
+        if (attacker instanceof Player player && victim instanceof LivingEntity living && attacker.isOnGround()) {
             Profile.get(player).ifEnabled(Criticals.class, m -> {
-                e.setDamage(Math.min(e.getDamage() * 1.5, ((LivingEntity) victim).getHealth()));
+                e.setDamage(Math.min(e.getDamage() * 1.5, living.getHealth()));
 
-                Location loc = victim.getLocation();
+                Location loc = living.getLocation();
                 loc.getWorld().spawnParticle(Particle.CRIT, loc.add(0, 1.2, 0), 25, 0, 0, 0, 0.55);
 
                 SoundPlayer sp = new SoundPlayer(loc, Sound.ENTITY_PLAYER_ATTACK_CRIT, 1, 1);
