@@ -1,0 +1,16 @@
+name: CombatUtils
+version: '${version}'
+main: io.github.itzispyder.combatutils.CombatUtils
+api-version: 1.20
+authors: [ ImproperIssues ]
+description: Utils for combat
+
+permissions:
+  cu.commands:
+    description: CombatUtils commands
+    default: op
+
+commands:
+  toggle:
+    description: Toggles modules
+    permission: cu.commands
