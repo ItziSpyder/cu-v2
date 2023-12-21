@@ -17,21 +17,10 @@ public class Hotbar {
         this.offhandStack = player.getInventory().getItemInOffHand();
         this.owner = player;
         Inventory inv = player.getInventory();
+
         for (int i = 0; i < 9; i ++) {
             ItemStack item = inv.getItem(i);
-            if (item != null) this.contents[i] = item;
-            else this.contents[i] = new ItemStack(Material.AIR);
-        }
-    }
-
-    public Hotbar(ItemStack[] contents) {
-        this.contents = new ItemStack[9];
-        this.owner = null;
-        this.offhandStack = new ItemStack(Material.AIR);
-        for (int i = 0; i < 9; i ++) {
-            ItemStack item = contents[i];
-            if (item != null) this.contents[i] = item;
-            else this.contents[i] = new ItemStack(Material.AIR);
+            contents[i] = item != null ? item : new ItemStack(Material.AIR);
         }
     }
 

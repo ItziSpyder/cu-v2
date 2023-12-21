@@ -120,10 +120,12 @@ public class Profile {
 
     public static class Config implements JsonSerializable<Config> {
         private final UUID id;
+        private ProfileGUI.Mode guiMode;
         private final Map<String, Boolean> modules = new HashMap<>();
 
         public Config(UUID id) {
             this.id = id;
+            this.guiMode = new ProfileGUI.Mode(false, false, false, false);
         }
 
         @Override
@@ -144,6 +146,14 @@ public class Profile {
 
         public UUID getOwner() {
             return id;
+        }
+
+        public ProfileGUI.Mode getGuiMode() {
+            return guiMode;
+        }
+
+        public void setGuiMode(ProfileGUI.Mode guiMode) {
+            this.guiMode = guiMode;
         }
 
         public Map<String, Boolean> getModules() {

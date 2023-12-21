@@ -6,11 +6,19 @@ authors: [ ImproperIssues ]
 description: Utils for combat
 
 permissions:
-  cu.commands:
-    description: CombatUtils commands
+  cu.admin:
+    description: CombatUtils admin commands
     default: op
+  cu.toggle:
+    description: CombatUtils toggle commands
 
 commands:
   toggle:
     description: Toggles modules
-    permission: cu.commands
+    permission: cu.toggle
+  toggle-gui:
+    description: Toggles GUI open trigger mode
+    permission: cu.toggle
+  toggle-view:
+    description: Able to toggle other players' modules/profile
+    permission: cu.admin

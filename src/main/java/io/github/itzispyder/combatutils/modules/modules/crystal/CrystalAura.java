@@ -1,8 +1,10 @@
 package io.github.itzispyder.combatutils.modules.modules.crystal;
 
+import io.github.itzispyder.combatutils.CombatUtils;
 import io.github.itzispyder.combatutils.modules.Category;
 import io.github.itzispyder.combatutils.modules.Module;
 import io.github.itzispyder.combatutils.util.Hotbar;
+import io.github.itzispyder.pdk.Global;
 import io.github.itzispyder.pdk.utils.misc.SoundPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -52,8 +54,7 @@ public class CrystalAura extends Module {
                 Block feetBlock = entity.getLocation().clone().getBlock();
 
                 if (isCrystalable(underBlock.getType()) && feetBlock.getType().equals(Material.AIR)) {
-                    hotbar.deductItem(Material.END_CRYSTAL, false);
-                    crystalAt(bLoc.add(0, 1, 0));
+                    crystalAt(player, hotbar, bLoc.add(0, 1, 0));
                     return true;
                 }
                 if (block.getType().equals(Material.AIR) && hotbar.containsItem(Material.OBSIDIAN)) {
@@ -63,8 +64,7 @@ public class CrystalAura extends Module {
                     place.playWithin(5);
                 }
                 if (isCrystalable(block.getType()) && bLoc.clone().add(0,1,0).getBlock().getType().equals(Material.AIR)) {
-                    hotbar.deductItem(Material.END_CRYSTAL, false);
-                    crystalAt(bLoc.add(0, 1, 0));
+                    crystalAt(player, hotbar, bLoc.add(0, 1, 0));
                     return true;
                 }
             }
@@ -73,19 +73,22 @@ public class CrystalAura extends Module {
         return false;
     }
 
-    private boolean isCrystalable(Material type) {
+    public static boolean isCrystalable(Material type) {
         return type == Material.OBSIDIAN || type == Material.BEDROCK;
     }
 
-    private void crystalAt(Location loc) {
+    public static void crystalAt(Player player, Hotbar hotbar, Location loc) {
         loc = loc.getBlock().getLocation().add(0.5, 0, 0.5);
+        hotbar.deductItem(Material.END_CRYSTAL, false);
+
         EnderCrystal ent = loc.getWorld().spawn(loc, EnderCrystal.class);
         ent.setShowingBottom(false);
+        CombatUtils.tagSummoned(ent);
 
-        Bukkit.getScheduler().scheduleSyncDelayedTask(getPlugin(), () -> getOwningPlayer().accept(player -> {
+        Bukkit.getScheduler().scheduleSyncDelayedTask(Global.instance.getPlugin(), () -> {
             if (!ent.isDead()) {
                 player.attack(ent);
             }
-        }),1);
+        }, 1);
     }
 }

@@ -4,6 +4,7 @@ import io.github.itzispyder.combatutils.modules.Category;
 import io.github.itzispyder.combatutils.modules.Module;
 import io.github.itzispyder.combatutils.profiles.Profile;
 import io.github.itzispyder.pdk.utils.raytracers.CustomDisplayRaytracer;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -40,5 +41,9 @@ public class Reach extends Module {
         if (!targets.isEmpty()) {
             attacker.attack(targets.get(0));
         }
+    }
+
+    public static float getReachDistance(Player p) {
+        return Profile.get(p).isEnabled(Reach.class) ? 6.0F : (p.getGameMode() == GameMode.CREATIVE ? 5.0F : 3.0F);
     }
 }

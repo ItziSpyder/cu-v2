@@ -23,7 +23,11 @@ public class Criticals extends Module {
         Entity victim = e.getEntity();
         Entity attacker = e.getDamager();
 
-        if (attacker instanceof Player player && victim instanceof LivingEntity living && attacker.isOnGround()) {
+        if (attacker instanceof Player player && victim instanceof LivingEntity living) {
+            if (!attacker.isOnGround() || player.getAttackCooldown() < 0.9) {
+                return;
+            }
+
             Profile.get(player).ifEnabled(Criticals.class, m -> {
                 e.setDamage(Math.min(e.getDamage() * 1.5, living.getHealth()));
 

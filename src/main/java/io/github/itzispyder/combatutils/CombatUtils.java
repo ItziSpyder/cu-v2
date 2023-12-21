@@ -1,15 +1,20 @@
 package io.github.itzispyder.combatutils;
 
 import io.github.itzispyder.combatutils.commands.ToggleCmd;
+import io.github.itzispyder.combatutils.commands.ToggleGuiCmd;
+import io.github.itzispyder.combatutils.commands.ToggleViewCmd;
 import io.github.itzispyder.combatutils.events.PlayerEvents;
 import io.github.itzispyder.combatutils.modules.modules.combat.*;
 import io.github.itzispyder.combatutils.modules.modules.crystal.CrystalAura;
+import io.github.itzispyder.combatutils.modules.modules.crystal.FastCrystals;
 import io.github.itzispyder.combatutils.modules.modules.world.AntiKb;
 import io.github.itzispyder.combatutils.modules.modules.world.Flight;
 import io.github.itzispyder.combatutils.modules.modules.world.NoFall;
+import io.github.itzispyder.combatutils.modules.modules.world.Speed;
 import io.github.itzispyder.combatutils.profiles.Profile;
 import io.github.itzispyder.pdk.PDK;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Entity;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class CombatUtils extends JavaPlugin {
@@ -40,6 +45,8 @@ public final class CombatUtils extends JavaPlugin {
 
         // commands
         new ToggleCmd().register();
+        new ToggleGuiCmd().register();
+        new ToggleViewCmd().register();
 
         // modules
         new Flight().register();
@@ -51,9 +58,19 @@ public final class CombatUtils extends JavaPlugin {
         new NoFall().register();
         new AntiKb().register();
         new CrystalAura().register();
+        new Speed().register();
+        new FastCrystals().register();
     }
 
     public void initTicking() {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> Profile.forEach(Profile::tick), 0, 1);
+    }
+
+    public static void tagSummoned(Entity entity) {
+        entity.addScoreboardTag("§ccombatutils:summoned");
+    }
+
+    public static boolean isTaggedSummoned(Entity entity) {
+        return entity.getScoreboardTags().contains("§ccombatutils:summoned");
     }
 }
