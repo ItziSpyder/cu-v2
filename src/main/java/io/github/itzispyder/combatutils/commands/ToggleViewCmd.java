@@ -6,6 +6,7 @@ import io.github.itzispyder.pdk.commands.Args;
 import io.github.itzispyder.pdk.commands.CommandRegistry;
 import io.github.itzispyder.pdk.commands.CustomCommand;
 import io.github.itzispyder.pdk.commands.completions.CompletionBuilder;
+import io.github.itzispyder.pdk.utils.ServerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
@@ -24,6 +25,6 @@ public class ToggleViewCmd implements CustomCommand {
 
     @Override
     public void dispatchCompletions(CompletionBuilder b) {
-        b.then(b.arg(Bukkit.getOnlinePlayers().stream().map(Player::getName).toList()));
+        b.then(b.arg(ServerUtils.nameArray()));
     }
 }
